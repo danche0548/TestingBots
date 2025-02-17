@@ -13,8 +13,35 @@
     <p id="response"></p>
 
     <script>
+        // Function to check if the API is reachable and working
+        function checkApiStatus() {
+            fetch("https://danielparipa1.sneakymicertifications.repl.co")
+                .then(response => {
+                    if (response.ok) {
+                        console.log("API is reachable.");
+                    } else {
+                        console.error("API is not reachable, received status: " + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking API:", error);
+                    alert("Error: API is not reachable.");
+                });
+        }
+
+        // Call the API check when the page loads
+        window.onload = function() {
+            checkApiStatus();
+        };
+
+        // Function to handle the bot token submission
         function submitToken() {
             const token = document.getElementById("token").value;
+
+            // First check if the API is reachable
+            checkApiStatus();
+
+            // If API is reachable, proceed with token validation
             fetch("https://danielparipa1.sneakymicertifications.repl.co/api/validate", {
                 method: "POST",
                 headers: {
