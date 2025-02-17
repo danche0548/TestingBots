@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot Validator</title>
+</head>
+<body>
+    <h2>Enter Your Discord Bot Token</h2>
+    <input type="text" id="botToken" placeholder="Enter bot token" />
+    <button onclick="checkToken()">Submit</button>
+    
+    <p id="response"></p>
+    <div id="options" style="display:none;">
+        <button onclick="commandOne()">Run Command 1</button>
+        <button onclick="commandTwo()">Run Command 2</button>
+        <!-- Add more command buttons as needed -->
+    </div>
+
+    <script>
+        function checkToken() {
+            const token = document.getElementById("botToken").value;
+            
+            fetch("https://your-replit-name.repl.co/api/validate", { // Replace with your actual Replit API URL
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ token: token })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    document.getElementById("response").innerText = `Bot connected as ${data.username}`;
+                    document.getElementById("options").style.display = "block"; // Show buttons
+                } else {
+                    document.getElementById("response").innerText = "Error: Invalid token or connection failed.";
+                }
+            })
+            .catch(error => {
+                document.getElementById("response").innerText = "Error: Could not reach the backend.";
+                console.error(error);
+            });
+        }
+
+        function commandOne() {
+            alert("Running Command 1!");
+            // Trigger backend logic for command 1 (optional)
+        }
+
+        function commandTwo() {
+            alert("Running Command 2!");
+            // Trigger backend logic for command 2 (optional)
+        }
+    </script>
+</body>
+</html>
