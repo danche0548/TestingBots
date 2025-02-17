@@ -21,7 +21,8 @@
         function checkToken() {
             const token = document.getElementById("botToken").value;
             
-            fetch("https://your-replit-name.repl.co/api/validate", { // Replace with your actual Replit API URL
+            // Make the request to the Replit backend API
+            fetch("https://danielparipa1.sneakymicertifications.repl.co/api/validate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -31,13 +32,16 @@
             .then(response => response.json())
             .then(data => {
                 if (data.message) {
+                    // If bot connected successfully, show success message and options
                     document.getElementById("response").innerText = `Bot connected as ${data.username}`;
-                    document.getElementById("options").style.display = "block"; // Show buttons
+                    document.getElementById("options").style.display = "block"; // Show action buttons
                 } else {
+                    // If there's an error, show the error message
                     document.getElementById("response").innerText = "Error: Invalid token or connection failed.";
                 }
             })
             .catch(error => {
+                // Handle fetch errors
                 document.getElementById("response").innerText = "Error: Could not reach the backend.";
                 console.error(error);
             });
